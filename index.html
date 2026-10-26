@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>F1 2026 · Race Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e8ebef;--card:#fff;--text:#12151b;--muted:#5d6675;--line:#d5dae1;--accent:#e3262e;--hero:#14171d;--hero-text:#f4f4f1;--saf:#ffa11f;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1116;--card:#171b22;--text:#eef0f3;--muted:#98a1b0;--line:#272d37;--hero:#1b2029;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1116;--card:#171b22;--text:#eef0f3;--muted:#98a1b0;--line:#272d37;--hero:#1b2029;color-scheme:dark}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 60px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 "Hanken Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+.wrap{max-width:1040px;margin:0 auto;padding:0 18px 56px}
+h1,h2,h3,.cond{font-family:Archivo,"Arial Narrow",Arial,sans-serif;font-stretch:112%}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 0 8px}
+header h1{font-size:22px;margin:0;font-weight:800;letter-spacing:-.01em}
+header h1 span{color:var(--accent)}
+.pill{font:500 13px "Hanken Grotesk",sans-serif;color:var(--text);border:1px solid var(--line);border-radius:6px;padding:5px 10px;background:var(--card);white-space:nowrap}
+#nv{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:6px;overflow-x:auto;padding:8px 0 12px;background:var(--bg);scrollbar-width:none}
+#nv a{flex:none;color:var(--text);text-decoration:none;font-weight:600;font-size:14px;padding:7px 13px;border-radius:6px;background:var(--card);border:1px solid var(--line)}
+#nv a:hover{border-color:var(--accent)}
+:focus-visible{outline:3px solid var(--saf);outline-offset:2px}
+.hero{position:relative;overflow:hidden;background:var(--hero);color:var(--hero-text);border-radius:4px 30px 4px 30px;padding:40px 30px 28px}
+.hero::before{content:"";position:absolute;inset:0 0 auto;height:10px;background:repeating-linear-gradient(90deg,var(--accent) 0 18px,#f4f4f1 18px 36px)}
+.hero::after{content:attr(data-r);position:absolute;right:22px;top:26px;font:900 clamp(90px,17vw,210px)/1 Archivo,sans-serif;font-stretch:125%;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.13);pointer-events:none}
+.hero>*{position:relative;z-index:1}
+.grow{display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.gantry{display:flex;gap:10px}
+.gantry i{width:34px;height:34px;border-radius:50%;background:#262b34;border:3px solid #39404c;box-shadow:inset 0 3px 6px rgba(0,0,0,.55)}
+.gantry i.on{background:#ff2a2a;border-color:#ff7a7a;box-shadow:0 0 18px 4px rgba(255,42,42,.55),inset 0 3px 6px rgba(0,0,0,.2)}
+.gcap{font-size:13px;opacity:.7;max-width:210px;line-height:1.35}
+.hero .lbl{font-size:15px;font-weight:600;color:var(--saf)}
+.hero h2{font-size:clamp(34px,7vw,66px);margin:4px 0 2px;font-weight:900;font-stretch:125%;line-height:1.02;letter-spacing:-.02em;max-width:14ch}
+.hero .sub{opacity:.8;font-size:16px}
+.cd{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:24px 0 16px;max-width:470px}
+.cd div{background:rgba(255,255,255,.07);border-radius:6px;padding:12px 6px;text-align:center}
+.cd b{display:block;font:800 42px/1 Archivo,sans-serif;font-stretch:112%;font-variant-numeric:tabular-nums}
+.cd small{font-size:13px;opacity:.65}
+.times{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;font-size:15px}
+.times div{background:rgba(255,255,255,.07);border-radius:6px;padding:10px 14px}
+.times div:first-child{border-left:4px solid var(--saf)}
+.times span{display:block;font-size:13px;opacity:.65}
+.live{display:inline-block;background:var(--accent);color:#fff;border-radius:6px;padding:2px 9px;font-size:13px;font-weight:700;animation:p 1.2s infinite}
+@keyframes p{50%{opacity:.45}}
+section{margin-top:46px}
+section>h2{font-size:26px;margin:0 0 14px;font-weight:800;letter-spacing:-.01em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.box{padding:20px}
+.box h3{margin:0 0 8px;font-size:17px;font-weight:700}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}
+.big{font:900 44px/1 Archivo,sans-serif;font-stretch:118%;letter-spacing:-.02em}
+.muted{color:var(--muted);font-size:14px}
+.race{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}
+.race:last-child{border-bottom:0}
+.race:has(.tag.next){box-shadow:inset 5px 0 var(--accent);background:color-mix(in srgb,var(--accent) 7%,var(--card))}
+.race .rd{font:800 24px Archivo,sans-serif;color:var(--muted)}
+.race .n{font-weight:600}
+.race .m{color:var(--muted);font-size:14px}
+.race .r{text-align:right;font-size:14px}
+.race.done{opacity:.6}
+.tag{display:inline-block;font-size:12px;font-weight:700;border-radius:5px;padding:2px 8px;background:var(--line);color:var(--muted)}
+.tag.next{background:var(--accent);color:#fff}
+.tabs{display:inline-flex;gap:0;margin-bottom:12px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+.tabs button{font:600 14px "Hanken Grotesk",sans-serif;border:0;background:transparent;color:var(--text);padding:9px 18px;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.row{display:grid;grid-template-columns:36px 1fr 54px;gap:10px;align-items:center;padding:10px 16px 10px 12px;border-bottom:1px solid var(--line);border-left:5px solid var(--c,transparent)}
+.row:last-child{border-bottom:0}
+.row .p{font:800 18px Archivo,sans-serif;color:var(--muted);text-align:center}
+.row .nm{font-weight:600}
+.row .tm{color:var(--muted);font-weight:400;font-size:13px;margin-left:4px}
+.tla{display:inline-block;width:46px;font:800 14px Archivo,sans-serif;font-stretch:112%;letter-spacing:.03em;color:var(--muted)}
+.bar{height:4px;border-radius:2px;background:var(--line);margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:2px}
+.row .pts{text-align:right;font:800 20px Archivo,sans-serif;font-variant-numeric:tabular-nums}
+#st .row:first-child .pts{color:var(--accent)}
+.podium{display:flex;align-items:flex-end;justify-content:center;gap:10px;padding:24px 16px 0;border-bottom:1px solid var(--line)}
+.pod{text-align:center;flex:1;max-width:150px}
+.pn{font-weight:700;margin-bottom:8px}
+.pb{background:var(--c);border-radius:8px 8px 0 0;display:flex;justify-content:center;padding-top:10px;font:900 26px Archivo,sans-serif;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.55)}
+.lb{display:block;font-size:14px;color:var(--muted);margin:10px 0}
+.lb select,.lb input{display:block;width:100%;margin-top:4px;padding:10px 11px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--text);font:inherit}
+.ck{display:block;margin:8px 0;font-size:15px}
+.btn{background:var(--accent);color:#fff;border:0;border-radius:6px;padding:12px 20px;font:700 15px "Hanken Grotesk",sans-serif;cursor:pointer;transition:transform .12s}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:var(--line);color:var(--text)}
+.btn:disabled{opacity:.5}
+.banner{background:color-mix(in srgb,var(--saf) 22%,transparent);border-left:4px solid var(--saf);border-radius:4px;padding:9px 12px;font-size:14px;margin-bottom:12px}
+.modal{position:fixed;inset:0;background:rgba(5,7,10,.7);display:flex;align-items:center;justify-content:center;padding:16px;z-index:50;overflow:auto}
+.modal[hidden]{display:none}.mbox{max-width:450px;width:100%;padding:22px}
+.ln{display:flex;justify-content:space-between;gap:12px;padding:5px 0;font-size:15px}
+.ln.t{border-top:1px solid var(--line);margin-top:8px;padding-top:10px;font-weight:800}
+.bk{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:15px}
+.bk:last-child{border:0}
+.toggle{background:none;border:0;color:var(--accent);font:700 14px "Hanken Grotesk",sans-serif;cursor:pointer;padding:10px 0}
+footer{margin-top:46px;font-size:13px;color:var(--muted);max-width:70ch}
+@media(max-width:560px){.hero{padding:36px 20px 22px}.race{grid-template-columns:40px 1fr}.race .r{grid-column:2;text-align:left}.cd b{font-size:34px}.gantry i{width:28px;height:28px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>F1 <span>2026</span> · Bengaluru Race Hub</h1>
+  <span style="display:flex;gap:8px;align-items:center"><span class="pill" id="tz"></span><button class="pill" id="th" style="cursor:pointer" aria-label="Toggle theme">◐</button></span>
+</header>
+<nav id="nv"><a href="#title">Title fight</a><a href="#cal-s">Calendar</a><a href="#watch">Watch</a><a href="#book">Book</a><a href="#pred">Predict</a><a href="#stand">Standings</a></nav>
+
+<div class="hero" id="hero"></div>
+
+<section id="title">
+  <h2>The title fight</h2>
+  <div class="grid2">
+    <div class="card box"><h3>Drivers’ leader</h3><div class="big" id="lead"></div><div class="muted" id="leadsub"></div></div>
+    <div class="card box"><h3>Still mathematically in the title fight</h3><div id="contenders"></div><div class="muted" id="clinch" style="margin-top:6px"></div></div>
+  </div>
+</section>
+
+<section id="cal-s">
+  <h2>Races still to come</h2>
+  <div class="card" id="cal"></div>
+  <button class="toggle" id="tog">Show full season ▾</button>
+  <div class="card" id="done" hidden></div>
+</section>
+
+<section id="watch"><h2>Where to watch in India</h2><div class="grid2">
+<div class="card box"><h3>Live on FanCode</h3><div class="muted">FanCode is the exclusive F1 streaming rights holder in India. Live coverage needs a paid plan, so check current pricing on FanCode.</div>
+<p><a class="btn" style="display:inline-block;text-decoration:none" href="https://www.fancode.com" target="_blank" rel="noopener">Open FanCode</a> <a id="gc" class="btn ghost" style="display:inline-block;text-decoration:none" target="_blank" rel="noopener">+ Google Calendar</a></p></div>
+<div class="card box"><h3>Bengaluru viewing guide (IST)</h3><div id="vn" class="muted"></div></div></div></section>
+<section id="book"><h2>Book a watch party <span class="tag">Demo</span></h2><div id="wp"></div><h2 style="margin-top:24px">My bookings</h2><div class="card" id="bk"></div></section>
+<section id="pred"><h2>Predict the podium</h2><div class="card box" id="pr"></div></section>
+<section id="stand">
+  <h2>Standings</h2>
+  <div class="tabs"><button id="tD" aria-pressed="true">Drivers</button><button id="tC" aria-pressed="false">Constructors</button></div>
+  <div class="card" id="st"></div>
+</section>
+
+<section>
+  <h2>Last race: United States GP</h2>
+  <div class="card" id="last"></div>
+</section>
+
+<div class="modal" id="mod" hidden><div class="card mbox" id="mb"></div></div>
+<footer>The payment portal is a demo sandbox: no real money moves, venues are samples and no real card details are collected. Snapshot after Round 18 (United States GP, 25 Oct 2026). Countdowns, race status and time zones update live in your browser; points tables are a snapshot. Constructors’ points are summed from the driver table. Race times are scheduled start times and can change.</footer>
+</div>
+
+<script>
+var H=3600e3;
+var RACES=[
+ {r:19,n:"Mexico City Grand Prix",c:"Autódromo Hermanos Rodríguez",f:"🇲🇽",t:Date.UTC(2026,10,1,20,0),z:"America/Mexico_City"},
+ {r:20,n:"São Paulo Grand Prix",c:"Interlagos",f:"🇧🇷",t:Date.UTC(2026,10,8,17,0),z:"America/Sao_Paulo"},
+ {r:21,n:"Las Vegas Grand Prix",c:"Las Vegas Strip Circuit (Saturday night)",f:"🇺🇸",t:Date.UTC(2026,10,22,4,0),z:"America/Los_Angeles"},
+ {r:22,n:"Qatar Grand Prix",c:"Lusail International Circuit",f:"🇶🇦",t:Date.UTC(2026,10,29,16,0),z:"Asia/Qatar"},
+ {r:23,n:"Abu Dhabi Grand Prix",c:"Yas Marina Circuit",f:"🇦🇪",t:Date.UTC(2026,11,6,13,0),z:"Asia/Dubai"}
+];
+var DONE=[["1","Australia","8 Mar"],["2","China","15 Mar"],["3","Japan","29 Mar"],["4","Miami","3 May"],["5","Canada","24 May"],["6","Monaco","7 Jun"],["7","Barcelona-Catalunya","14 Jun"],["8","Austria","28 Jun"],["9","Great Britain","5 Jul"],["10","Belgium","19 Jul"],["11","Hungary","26 Jul"],["12","Netherlands","23 Aug"],["13","Italy","6 Sep"],["14","Spain (Madrid)","13 Sep"],["15","Azerbaijan","26 Sep"],["16","Bahrain GP (held in Malaysia)","4 Oct"],["17","Singapore","11 Oct"],["18","United States","25 Oct"]];
+var COL={"Mercedes":"#27F4D2","Ferrari":"#E8002D","McLaren":"#FF8000","Red Bull":"#3671C6","Racing Bulls":"#6692FF","Alpine":"#0093CC","Haas":"#9a9ea6","Audi":"#F50537","Williams":"#64C4FF","Aston Martin":"#229971","Cadillac":"#8d8d93"};
+var DR=[["Kimi Antonelli","Mercedes",365],["George Russell","Mercedes",242],["Lewis Hamilton","Ferrari",241],["Max Verstappen","Red Bull",236],["Charles Leclerc","Ferrari",233],["Lando Norris","McLaren",211],["Oscar Piastri","McLaren",144],["Isack Hadjar","Red Bull",105],["Liam Lawson","Racing Bulls",77],["Pierre Gasly","Alpine",42],["Arvid Lindblad","Racing Bulls",38],["Franco Colapinto","Alpine",27],["Oliver Bearman","Haas",23],["Nico Hülkenberg","Audi",13],["Gabriel Bortoleto","Audi",10],["Esteban Ocon","Haas",7],["Fernando Alonso","Aston Martin",7],["Carlos Sainz","Williams",7],["Alex Albon","Williams",5],["Yuki Tsunoda","Red Bull",1],["Lance Stroll","Aston Martin",0],["Valtteri Bottas","Cadillac",0],["Sergio Pérez","Cadillac",0]];
+var LAST=["Kimi Antonelli","Charles Leclerc","Max Verstappen","Lewis Hamilton","Lando Norris","Isack Hadjar","Oscar Piastri","George Russell","Liam Lawson","Pierre Gasly"];
+var PTS=[25,18,15,12,10,8,6,4,2,1];
+var $=function(i){return document.getElementById(i)};
+var tzName=Intl.DateTimeFormat().resolvedOptions().timeZone||"your time";
+$("tz").textContent="📍 Bengaluru · IST";
+
+function fmt(ms,z){
+  var o={weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit",hour12:false,timeZoneName:"short"};
+  o.timeZone=z||"Asia/Kolkata";
+  try{return new Date(ms).toLocaleString(undefined,o)}catch(e){return new Date(ms).toUTCString()}
+}
+function status(r,now){return now>=r.t+2*H?"done":(now>=r.t?"live":"up")}
+function nextRace(now){for(var i=0;i<RACES.length;i++){if(now<RACES[i].t+2*H)return RACES[i]}return null}
+function leftCount(now){return RACES.filter(function(r){return now<r.t+2*H}).length}
+
+function renderHero(now){
+  var r=nextRace(now),h=$("hero");
+  if(!r){h.innerHTML='<div class="lbl">Season complete</div><h2>That’s a wrap on 2026</h2><div class="sub">All 23 rounds are done. Final points are in the standings below once updated.</div>';return}
+  var s=status(r,now),d=r.t-now;
+  var lbl=s==="live"?'<span class="live">LIVE NOW</span>':"Next up: round "+r.r+" of 23";
+  var cd="";
+  if(s==="up"){
+    var D=Math.floor(d/864e5),Hh=Math.floor(d%864e5/H),M=Math.floor(d%H/6e4),S=Math.floor(d%6e4/1e3);
+    cd='<div class="cd"><div><b>'+D+'</b><small>days</small></div><div><b>'+String(Hh).padStart(2,"0")+'</b><small>hours</small></div><div><b>'+String(M).padStart(2,"0")+'</b><small>mins</small></div><div><b>'+String(S).padStart(2,"0")+'</b><small>secs</small></div></div>';
+  } else cd='<div style="height:14px"></div>';
+  h.setAttribute("data-r",r.r);h.innerHTML='<div class="grow">'+lights(s,d)+'</div><div class="lbl">'+lbl+'</div><h2>'+r.f+" "+r.n+'</h2><div class="sub">'+r.c+'</div>'+cd+
+   '<div class="times"><div><span>Lights out · IST (Bengaluru)</span>'+fmt(r.t)+'</div><div><span>Lights out · track local time</span>'+fmt(r.t,r.z)+'</div><div><span>Bengaluru viewing</span>'+viewNote(r.t)+'</div></div>';
+}
+
+function renderCal(now){
+  $("cal").innerHTML=RACES.map(function(r){
+    var s=status(r,now),nx=nextRace(now),isNext=nx&&nx.r===r.r;
+    var tag=s==="done"?'<span class="tag">Finished</span>':s==="live"?'<span class="live">LIVE</span>':isNext?'<span class="tag next">Next</span>':'<span class="tag">Upcoming</span>';
+    var days=s==="up"?Math.max(0,Math.ceil((r.t-now)/864e5))+" days to go":"";
+    return '<div class="race'+(s==="done"?" done":"")+'"><div class="rd">R'+r.r+'</div><div><div class="n">'+r.f+" "+r.n+'</div><div class="m">'+r.c+'</div></div><div class="r">'+tag+'<div>'+fmt(r.t)+'</div><div class="m">'+days+'</div></div></div>';
+  }).join("");
+}
+
+function renderTitle(now){
+  var n=leftCount(now),lead=DR[0],gap=lead[2]-DR[1][2];
+  $("lead").textContent=lead[0];
+  $("leadsub").textContent=lead[2]+" pts · "+gap+" ahead of "+DR[1][0]+" · "+(n*25)+" points still available ("+n+" rounds, no sprints left)";
+  var c=DR.filter(function(d){return d[2]+25*n>=lead[2]});
+  $("contenders").innerHTML=c.map(function(d){return '<span class="tag" style="margin:2px 4px 2px 0;background:'+COL[d[1]]+'33;color:var(--text)">'+d[0]+' · '+(lead[2]-d[2])+' back</span>'}).join("");
+  var nx=nextRace(now);
+  $("clinch").textContent=nx&&n>1?"Antonelli can clinch as early as "+nx.n.replace(" Grand Prix","")+" if his lead over every rival is above "+(25*(n-1))+" points after that race.":(n===1?"Title is decided at the final round unless the lead is already above 25.":"");
+}
+
+var mode="D";
+function renderSt(){
+  var rows;
+  if(mode==="D")rows=DR.map(function(d){return [d[0],d[1],d[2],COL[d[1]]]});
+  else{var t={};DR.forEach(function(d){t[d[1]]=(t[d[1]]||0)+d[2]});
+    rows=Object.keys(t).map(function(k){return [k,"",t[k],COL[k]]}).sort(function(a,b){return b[2]-a[2]})}
+  var max=rows[0][2]||1;
+  $("st").innerHTML=rows.map(function(r,i){
+    return '<div class="row" style="--c:'+r[3]+'"><div class="p">'+(i+1)+'</div><div><div class="nm">'+(r[1]?'<b class="tla">'+tla(r[0])+'</b>':'')+r[0]+(r[1]?' <span class="tm">'+r[1]+'</span>':'')+'</div><div class="bar"><i style="width:'+(r[2]/max*100)+'%;background:'+r[3]+'"></i></div></div><div class="pts">'+r[2]+'</div></div>';
+  }).join("");
+}
+$("tD").onclick=function(){mode="D";$("tD").setAttribute("aria-pressed","true");$("tC").setAttribute("aria-pressed","false");renderSt()};
+$("tC").onclick=function(){mode="C";$("tC").setAttribute("aria-pressed","true");$("tD").setAttribute("aria-pressed","false");renderSt()};
+
+$("last").innerHTML=podium()+LAST.map(function(n,i){
+  var d=DR.filter(function(x){return x[0]===n})[0];
+  return '<div class="row" style="--c:'+COL[d[1]]+'"><div class="p">'+(i+1)+'</div><div><div class="nm">'+n+' <span class="tm">'+d[1]+'</span></div></div><div class="pts">+'+PTS[i]+'</div></div>';
+}).join("")+'<div class="row"><div></div><div class="muted">Antonelli took his ninth win of 2026. Top-10 order read from the season results grid.</div><div></div></div>';
+
+$("done").innerHTML=DONE.map(function(d){return '<div class="race done" style="opacity:.8"><div class="rd">R'+d[0]+'</div><div class="n">'+d[1]+'</div><div class="r">'+d[2]+'</div></div>'}).join("");
+$("tog").onclick=function(){var h=$("done").hidden;$("done").hidden=!h;$("tog").textContent=h?"Hide full season ▴":"Show full season ▾"};
+
+function tick(){var now=Date.now();renderHero(now)}
+function slow(){var now=Date.now();renderCal(now);renderTitle(now)}
+tick();slow();renderSt();
+setInterval(tick,1000);setInterval(slow,30000);
+function tla(n){return n.normalize("NFD").replace(/[\u0300-\u036f]/g,"").split(" ").pop().slice(0,3).toUpperCase()}
+function lights(s,d){var on=s==="live"?0:s==="up"?Math.max(0,Math.min(5,5-Math.floor(d/864e5))):5,a="";for(var i=0;i<5;i++)a+='<i class="'+(i<on?"on":"")+'"></i>';
+ return '<div class="gantry" role="img" aria-label="'+on+' of 5 start lights lit">'+a+'</div><div class="gcap">'+(s==="live"?"Lights out. Racing now.":"One light comes on per day in the final five days.")+'</div>'}
+function podium(){var o=[1,0,2];return '<div class="podium">'+o.map(function(k){var n=LAST[k],d=DR.filter(function(x){return x[0]===n})[0];return '<div class="pod" style="--c:'+COL[d[1]]+'"><div class="pn">'+n.split(" ").pop()+'</div><div class="pb" style="height:'+(k===0?112:k===1?86:64)+'px">P'+(k+1)+'</div></div>'}).join("")+'</div>'}
+[].forEach.call(document.querySelectorAll("#nv a"),function(a){a.onclick=function(e){e.preventDefault();var t=$(a.getAttribute("href").slice(1));if(t)t.scrollIntoView({behavior:"smooth"})}});
+
+function viewNote(t){var h=new Date(t+19800000).getUTCHours();return h<6?"🌙 Late night, set an alarm":h<12?"☀️ Morning watch":h<18?"🌤️ Afternoon watch":h<22?"🌆 Evening watch":"🌃 Late evening"}
+function ls(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function inr(n){return "₹"+Math.round(n).toLocaleString("en-IN")}
+var VEN=[["Indiranagar Fan Zone",499],["Koramangala Fan Zone",599],["Whitefield Fan Zone",449],["HSR Layout Fan Zone",549]];
+var ADD=[["Snack combo",249],["Team cap",399]];
+
+$("th").onclick=function(){var d=document.documentElement,dark=getComputedStyle(d).colorScheme==="dark";d.setAttribute("data-theme",dark?"light":"dark")};
+
+$("vn").innerHTML=RACES.map(function(r){return '<div class="ln"><span>R'+r.r+' '+r.n.replace(" Grand Prix","")+'</span><span>'+fmt(r.t)+'</span></div><div class="muted" style="margin:-2px 0 6px">'+viewNote(r.t)+'</div>'}).join("");
+(function(){var r=nextRace(Date.now());if(!r){$("gc").style.display="none";return}
+ var iso=function(t){return new Date(t).toISOString().replace(/[-:]/g,"").replace(/\.\d+/,"")};
+ $("gc").href="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent("F1 "+r.n)+"&dates="+iso(r.t)+"/"+iso(r.t+2*H)+"&details="+encodeURIComponent("Watch live on FanCode")+"&location="+encodeURIComponent(r.c)})();
+
+function calc(){var v=VEN[+$("wv").value],s=Math.min(8,Math.max(1,Math.floor(+$("ws").value)||1)),ad=[].slice.call(document.querySelectorAll(".wa:checked")).map(function(x){return ADD[+x.value]});
+ var per=v[1]+ad.reduce(function(a,b){return a+b[1]},0),sub=per*s,fee=sub*0.02,gst=(sub+fee)*0.18;
+ return{race:RACES[+$("wr").value],v:v,s:s,ad:ad,sub:sub,fee:fee,gst:gst,tot:sub+fee+gst}}
+function showT(){var c=calc();$("wt").innerHTML='<div class="ln"><span>'+c.s+' seat(s) + add-ons</span><span>'+inr(c.sub)+'</span></div><div class="ln"><span>Convenience fee (2%)</span><span>'+inr(c.fee)+'</span></div><div class="ln"><span>GST (18%)</span><span>'+inr(c.gst)+'</span></div><div class="ln t"><span>Total</span><span>'+inr(c.tot)+'</span></div>'}
+$("wp").innerHTML='<div class="grid2"><div class="card box"><h3>Book a seat</h3>'+
+ '<label class="lb">Race<select id="wr">'+RACES.map(function(r,i){return '<option value="'+i+'">R'+r.r+' · '+r.n.replace(" Grand Prix","")+' · '+fmt(r.t)+'</option>'}).join("")+'</select></label>'+
+ '<label class="lb">Venue (sample)<select id="wv">'+VEN.map(function(v,i){return '<option value="'+i+'">'+v[0]+' · '+inr(v[1])+'/seat</option>'}).join("")+'</select></label>'+
+ '<label class="lb">Seats (max 8)<input id="ws" type="number" min="1" max="8" value="2"></label>'+
+ '<label class="lb">Name on booking<input id="wn" type="text" maxlength="40" placeholder="Your name"></label>'+
+ ADD.map(function(a,i){return '<label class="ck"><input type="checkbox" class="wa" value="'+i+'"> '+a[0]+' (+'+inr(a[1])+'/seat)</label>'}).join("")+
+ '</div><div class="card box"><h3>Price</h3><div id="wt"></div><p><button class="btn" id="wb">Proceed to pay</button></p><div class="muted">Demo sandbox. Venues are samples; no real booking or payment happens.</div></div></div>';
+["wr","wv","ws"].forEach(function(i){$(i).oninput=showT});
+[].forEach.call(document.querySelectorAll(".wa"),function(x){x.onchange=showT});
+showT();
+$("wb").onclick=function(){openPay(calc(),($("wn").value||"").trim()||"Guest")};
+
+function renderBk(){var a=ls("f1bk")||[];
+ $("bk").innerHTML=a.length?a.map(function(b){return '<div class="bk"><div><b>'+esc(b.id)+'</b> · '+esc(b.race)+'<div class="muted">'+esc(b.venue)+' · '+b.seats+' seat(s) · '+esc(b.name)+' · '+inr(b.total)+' via '+esc(b.method)+' (test)</div></div><button class="btn ghost" data-id="'+esc(b.id)+'">Cancel</button></div>'}).join(""):'<div class="bk"><span class="muted">No bookings yet. Saved only in this browser.</span></div>'}
+$("bk").onclick=function(e){var id=e.target.getAttribute&&e.target.getAttribute("data-id");if(!id)return;ls("f1bk",(ls("f1bk")||[]).filter(function(b){return b.id!==id}));renderBk()};
+renderBk();
+
+function closeM(){$("mod").hidden=true}
+function openPay(c,name){
+ var m=$("mod"),b=$("mb"),meth="UPI";m.hidden=false;
+ b.innerHTML='<h3 class="cond" style="font-size:22px;margin:0 0 8px">Checkout · Sandbox</h3><div class="banner">Test mode. No real money moves. Please do not enter real card or bank details.</div>'+
+ '<div class="muted">'+esc(c.race.n)+' · '+c.s+' seat(s) · '+esc(c.v[0])+'</div><div class="big" style="margin:6px 0">'+inr(c.tot)+'</div>'+
+ '<div class="tabs"><button data-m="UPI" aria-pressed="true">UPI</button><button data-m="Card" aria-pressed="false">Card</button><button data-m="Netbanking" aria-pressed="false">Netbanking</button></div><div id="mp"></div>'+
+ '<div style="display:flex;gap:8px;margin-top:12px"><button class="btn" id="pay">Pay '+inr(c.tot)+'</button><button class="btn ghost" id="cx">Cancel</button></div><div id="pm" class="muted" style="margin-top:8px"></div>';
+ function panel(){$("mp").innerHTML=meth==="UPI"?'<label class="lb">UPI ID (any test ID)<input id="up" placeholder="name@upi" autocomplete="off"></label>':meth==="Card"?'<label class="lb">Sandbox test card<input disabled value="4111 1111 1111 1111"></label><div class="muted">Expiry 12/30 · CVV 123 (sandbox values)</div>':'<label class="lb">Bank<select id="nb"><option>Test Bank of Bengaluru</option><option>Sandbox National Bank</option></select></label>'}
+ panel();
+ [].forEach.call(b.querySelectorAll("[data-m]"),function(x){x.onclick=function(){meth=x.getAttribute("data-m");[].forEach.call(b.querySelectorAll("[data-m]"),function(y){y.setAttribute("aria-pressed",y===x?"true":"false")});panel()}});
+ $("cx").onclick=closeM;
+ $("pay").onclick=function(){
+  if(meth==="UPI"&&($("up").value||"").indexOf("@")<1){$("pm").textContent="Enter a test UPI ID like name@upi.";return}
+  $("pay").disabled=true;$("pm").textContent="Processing… (simulated)";
+  setTimeout(function(){
+   var id="BLR-F1-"+Math.random().toString(36).slice(2,8).toUpperCase();
+   var bk={id:id,race:c.race.n,venue:c.v[0],seats:c.s,total:Math.round(c.tot),method:meth,name:name,at:Date.now()};
+   var a=ls("f1bk")||[];a.unshift(bk);ls("f1bk",a);renderBk();
+   b.innerHTML='<h3 class="cond" style="font-size:22px;margin:0 0 8px">✅ Booking confirmed (test)</h3><div class="ln"><span>Booking ID</span><b>'+id+'</b></div><div class="ln"><span>Race</span><span>'+esc(c.race.n)+'</span></div><div class="ln"><span>Lights out (IST)</span><span>'+fmt(c.race.t)+'</span></div><div class="ln"><span>Venue</span><span>'+esc(c.v[0])+'</span></div><div class="ln"><span>Seats</span><span>'+c.s+'</span></div><div class="ln t"><span>Paid via '+meth+'</span><span>'+inr(c.tot)+'</span></div><div class="muted" style="margin:8px 0">Sandbox receipt only. Nothing was charged.</div><button class="btn" id="ok">Done</button>';
+   $("ok").onclick=closeM},1400)}
+}
+$("mod").onclick=function(e){if(e.target===$("mod"))closeM()};
+
+(function(){var r=nextRace(Date.now()),el=$("pr");
+ if(!r){el.textContent="Season complete. See you in 2027!";return}
+ var key="f1pred"+r.r,saved=ls(key);
+ var opts=DR.slice(0,12).map(function(d){return '<option>'+d[0]+'</option>'}).join("");
+ function draw(){el.innerHTML='<h3>Who stands on the podium in '+r.n.replace(" Grand Prix","")+'?</h3><div class="grid2">'+["P1","P2","P3"].map(function(p,i){return '<label class="lb">'+p+'<select class="pp">'+opts+'</select></label>'}).join("")+'</div><p><button class="btn" id="ps">Lock in prediction</button></p><div class="muted" id="pv"></div>';
+  var sel=el.querySelectorAll(".pp");[].forEach.call(sel,function(x,i){x.selectedIndex=saved?Math.max(0,DR.findIndex(function(d){return d[0]===saved[i]})):i});
+  if(saved)$("pv").textContent="Locked in: "+saved.join(" › ")+". Scoring idea: 5 pts exact position, 2 pts right driver wrong spot.";
+  $("ps").onclick=function(){var v=[].map.call(sel,function(x){return x.value});if(new Set(v).size<3){$("pv").textContent="Pick three different drivers.";return}saved=v;ls(key,v);$("pv").textContent="Locked in: "+v.join(" › ")+". Scoring idea: 5 pts exact position, 2 pts right driver wrong spot."}}
+ draw()})();
+
+</script>
+</body>
+</html>
